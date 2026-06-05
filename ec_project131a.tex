@@ -11,6 +11,8 @@
 \usepackage{float}
 \usepackage{hyperref}
 \usepackage{geometry}
+\setlength{\parindent}{0pt}
+\hbadness=10000
 
 \geometry{
     left=1in,
@@ -128,7 +130,155 @@ Project Statement:\\
 
 \hrule
 
-\clearpage 
+\
+
+For this problem, each sensor observes
+
+\[
+X_i = S + Z_i
+\]
+
+where \(S \in \{-m,m\}\) and the noise variables \(Z_i\) are independent and identically distributed according to a standard normal distribution \(N(0,1)\). The signal amplitude is given as \(m = 0.5\). \\
+
+The detector uses the sample mean
+
+\[
+T_n = \frac{1}{n}\sum_{i=1}^{n} X_i
+\]
+
+and makes the decision
+
+\[
+\hat{S} =
+\begin{cases}
+m, & T_n \ge 0 \\
+-m, & T_n < 0
+\end{cases}
+\]
+
+The goal is to determine the probability of error as a function of the number of sensors \(n\) and find the minimum number of sensors required so that the probability of error is less than \(10^{-3}\).
+
+\subsection{Distribution of the Sample Mean}
+
+Starting with the definition of the sample mean,
+
+\[
+T_n = \frac{1}{n}\sum_{i=1}^{n}(S+Z_i)
+\]
+
+Since \(S\) is constant across all sensors,
+
+\[
+T_n = S + \frac{1}{n}\sum_{i=1}^{n} Z_i
+\]
+
+Because the noise variables \(Z_i\) are independent Gaussian random variables with mean \(0\) and variance \(1\), the average noise term has distribution
+
+\[
+\frac{1}{n}\sum_{i=1}^{n} Z_i \sim N\left(0,\frac{1}{n}\right)
+\]
+
+Therefore, conditioned on the transmitted signal \(S\),
+
+\[
+T_n|S=m \sim N\left(m,\frac{1}{n}\right)
+\]
+
+and
+
+\[
+T_n|S=-m \sim N\left(-m,\frac{1}{n}\right)
+\]
+
+Thus, the sample mean remains to be Gaussian with mean equal to the transmitted signal ($m$) and variance equal to \(1/n\).
+
+\subsection{Probability of Error}
+
+An error occurs when the detector chooses the wrong hypothesis.
+
+Considering the case \(S=m\), the detector makes an error whenever \(T_n<0\). Therefore,
+
+\[
+P(\text{error}|S=m)
+=
+P(T_n<0|S=m)
+\]
+
+Since \(T_n|S=m\) is Gaussian with mean \(m\) and variance \(1/n\), we are able to standardize the random variable:
+
+\[
+P(\text{error}|S=m)
+=
+P\left(
+\frac{T_n-m}{1/\sqrt{n}}
+<
+\frac{0-m}{1/\sqrt{n}}
+\right)
+\]
+
+\[
+=
+P(Z<-m\sqrt{n})
+\]
+
+where \(Z\sim N(0,1)\).
+
+Using the Gaussian Q-function,
+
+\[
+P(\text{error}|S=m)=Q(m\sqrt{n})
+\]
+
+By symmetry,
+
+\[
+P(\text{error}|S=-m)=Q(m\sqrt{n})
+\]
+
+Since both of the hypotheses are equally likely, 
+
+\[
+P(\text{error})
+=
+\frac{1}{2}P(\text{error}|S=m)
++
+\frac{1}{2}P(\text{error}|S=-m)
+\]
+
+\[
+=
+Q(m\sqrt{n})
+\]
+
+Substituting \(m=0.5\):
+
+\[
+P(\text{error})
+=
+Q(0.5\sqrt{n})
+\]
+
+This expression above is the theoretical probability of error for any number of sensors n.
+
+\subsection{MATLAB}
+
+The probability of error was evaluated for \(n=1\) to \(100\) using MATLAB's \texttt{qfunc} function. A semilogarithmic plot was generated using \texttt{semilogy} to clearly display the exponential decrease in error probability as the number of sensors increases.
+
+The MATLAB results show that the probability of error decreases rapidly as additional sensors are added. This occurs because averaging more independent observations reduces the variance of the sample mean, making it easier to distinguish between the two possible signal values.
+
+The smallest number of sensors satisfying
+
+\[
+P(\hat{S}\neq S)<10^{-3}
+\]
+
+was found to be
+
+\[
+n_g=39.
+\]
+
+Therefore, at least \(39\) sensors are required to achieve a probability of error below \(10^{-3}\).\clearpage 
 
 \section{Problem 2}
 4pts.\\
