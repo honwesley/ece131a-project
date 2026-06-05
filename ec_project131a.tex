@@ -128,7 +128,132 @@ Project Statement:\\
 
 \hrule
 
+\clearpage 
+
+\section{Problem 2}
+4pts.\\
+
+\hrule 
+
+\
+
+\noindent Simulate this sensor system with the $n_g$ sensors as follows: For each simulation run, generate $n_g$ observations $X_i$ using $S = 0.5$ and \texttt{normrnd} to generate $Z_i$ and use them to compute the sufficient statistic $T_{n_g}$. Then use $T_{n_g}$ to compute $\hat{S}$ and note whether the estimate is correct or is an error. Perform simulation runs until you have observed 200 errors. Keep track of the total number $K$ of simulation runs. Report your estimated error rate as $200/K$. If everything is working well, your simulation point should match the probability of error you calculated in the previous part for $n_g$ observations, i.e., a number close to $10^{-3}$. Your simulation may take a few minutes to complete since you will need approximately 200{,}000 runs.\\
+
+\hrule
+
+\clearpage
+
+\section{Problem 3}
+3pts.\\
+
+\hrule 
+
+\
+
+\noindent We will refer to the sensor studied in problems 1--2 as a ``full precision'' sensor. Now, let's suppose that it is resource intensive to sense the real numbers $X_i$ with full precision. We want to deploy less expensive sensors that merely detect whether $X_i \geq 0$. These sensors each collect
+
+\[
+B_i =
+\begin{cases}
+1 & \text{if } X_i \geq 0 \\
+0 & \text{otherwise}
+\end{cases}
+\]
+
+We are fortunate that $U_n = \sum_{i=1}^n B_i$ is a sufficient statistic of $B$ for $S$, so that we can base our estimate $\hat{S}$ on this sum.
+
+What kind of random variable is $B_i$? What kind of random variable is $U_n$? For our case of interest, where $S = \pm 0.5$ and $X_i = S + Z_i$ with the random variables $Z_i$ independent and identically distributed according to a standard normal distribution $\mathcal{N}(0,1)$, find the value of $P(B_i = 1 \mid S = 0.5)$, which we will call $p$.
+
+We need a decision rule to decide our estimate $\hat{S}$ as a function of $U_n$. We will use the ``maximum likelihood'' principle to choose our rule. Specifically, choose the value of $\hat{S}$ the rule that maximizes the probability of the observed value of $U_n$ given $S = \hat{S}$.
+
+\[
+\hat{S} =
+\begin{cases}
+0.5 & \text{if } P_{U|S}(u|0.5) > P_{U|S}(u|-0.5) \\
+-0.5 & \text{otherwise.}
+\end{cases}
+\]
+
+Show that the maximum-likelihood decoder turns out to be a majority vote decoder. It turns out that how you handle ties does not affect the total probability of error, but it could favor one of the outcomes.
+\\
+
+\hrule
+
+\clearpage
+
+\section{Problem 4}
+3pts.\\
+
+\hrule 
+
+\
+
+\noindent Use the Matlab function \texttt{semilogy} to plot the probability of error $P(\hat{S} \neq S)$ as a function of the number of sensors $n$ for $1 \leq n \leq 100$ for the system based on sensors that provide $B_i$. Add this to your plot from problem 2 so that you have a single plot with two curves. Label your axes. Include a legend. Take pride in your data. For the binary sensor, you only need to plot probability of error for odd values of $n$, so you don't need to worry about breaking ties. The Matlab function \texttt{binocdf} is your friend for this problem. How many sensors, considering only odd numbers, do you need so that $P(\hat{S} \neq S) < 10^{-3}$? Call this number $n_b$ (as in the number of Bernoulli samples in the binomial random variable.)
+\\
+
+\hrule
+
+\clearpage
+
+\section{Problem 5}
+3pts.\\
+
+\hrule 
+
+\
+
+\noindent Simulate this binary sensor system with $n_b$ sensors as follows: For each simulation run, generate $n_b$ observations $X_i$ as before and then compute the associated $B_i$ values and use them to compute the sufficient statistic $U_{n_b}$. Then use $U_{n_b}$ to compute $\hat{S}$ and note whether the estimate is correct or is an error. Perform simulation runs until you observe 200 errors. Keep track of the total number $K$ of simulation runs. Report your estimated error rate as $\frac{200}{K}$. If everything is working well, your simulation point should match the probability of error you calculated in the previous part for $n_b$ observations, i.e. a number close to $10^{-3}$.\\
+
+\hrule
+
+\clearpage
+
+\section{Problem 6}
+3pts.\\
+
+\hrule 
+
+\
+
+\noindent If the binary sensor that we studied in problems 3--5 costs half as much as the full-precision sensor we studied in problems 1--2, which system costs less to achieve probability of error $10^{-3}$? Based on the slopes of the lines in your plot, would the same system also be the most cost effective for lower probabilities of error, assuming binary sensors costs half as much as the full-precision sensors?\\
+
+\hrule
+
+\clearpage
+
+\section{Problem 7}
+3pts.\\
+
+\hrule 
+
+\
+
+\noindent As it turns out, the binary sensors as we have defined them above have a peculiar property that for an odd number $n$, the probability of error for $n$ sensors is the same as the probability of error for $n+1$ sensors. Confirm this with a few calculations using \texttt{binocdf}. You can break ties, for example, by always calling them $\hat{s} = m$. Show mathematically that the probability of error for $n$ sensors is the same as the probability of error for $n+1$ sensors for any odd number $n$ and any value of $p$.
+\\
+
+\hrule
+
+\clearpage
+
+\section{Problem 8}
+3pts.\\
+
+\hrule 
+
+\
+
+\noindent Devise a modification to the sensor for the even-valued $n$ case that will allow it to perform better than the case with one fewer sensor. If you can't think of a way, look at Fig. 7 in [1] and its discussion for a clue. For the value $n_b$ that you identified in problem 4, optimize your modification to get the most improvement possible in the probability of error. It won't be too much better. You will never do better than $n_b + 2$ sensors using the standard approach we described above. Report the probability of error you obtain by applying your modification for the case of $n_b + 1$ sensors.
+\\
+
+\hrule
+
+\clearpage
+
+
+
 %-------------------------------------------------
+
+\section{Conclusion}
 
 
 \end{document}
