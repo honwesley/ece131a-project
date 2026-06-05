@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[12pt,a4paper]{article}
 
 % Packages
 \usepackage[utf8]{inputenc}
@@ -36,15 +36,6 @@
 \pagenumbering{roman}
 
 \tableofcontents
-\listoffigures
-\listoftables
-
-\chapter*{Abstract}
-Write your abstract here.
-
-\chapter*{Acknowledgements}
-(Optional)
-
 \clearpage
 
 %-------------------------------------------------
@@ -52,116 +43,92 @@ Write your abstract here.
 %-------------------------------------------------
 \pagenumbering{arabic}
 
-\chapter{Introduction}
+\section{Introduction}
 
-\section{Background}
-Provide context for the project.
+\subsection{Background}
+This problem is adapted from the results in [1] and [2]. A scalar signal
+$S \in \{-m,m\}$ is transmitted from a satellite to a field of $n$ sensors
+on the surface of the earth. $S$ communicates an important message, and is
+equally likely to take either value so that
 
-\section{Problem Statement}
-Describe the problem being addressed.
+\[
+P_S(s)=
+\begin{cases}
+\frac{1}{2}, & \text{for } s=-m,\\[4pt]
+\frac{1}{2}, & \text{for } s=m,\\[4pt]
+0, & \text{otherwise}.
+\end{cases}
+\]
 
-\section{Objectives}
-List the goals of the project.
+Sensor $i$ observes random variable
 
-\section{Report Organization}
-Briefly describe each chapter.
+\[
+X_i = S + Z_i
+\]
 
-%-------------------------------------------------
+where the random variables $Z_i$ are independent and identically distributed
+according to a standard normal distribution $\mathcal{N}(0,1)$.
+This project explores how to efficiently and reliably estimate $S$ from the
+vector of observations
 
-\chapter{Literature Review}
+\[
+\mathbf{X} = [X_1, X_2, \ldots, X_n].
+\]
 
-\section{Previous Work}
+Any estimate $\hat{S}$ will naturally depend on the observables.
+A \emph{statistic} is a function of the set of observables that we use in
+preparing our estimate. For this problem we will be especially interested in
+the statistic
 
-\subsection{Approach A}
-Discussion.
+\[
+T_n = \frac{1}{n}\sum_{i=1}^{n} X_i,
+\]
 
-\subsection{Approach B}
-Discussion.
+which is sometimes called the sample mean.
 
-\section{Research Gaps}
-Discussion.
+A \emph{sufficient statistic} of a set of observations for estimation of a
+particular random variable is one that allows as good of an estimate of the
+random variable as the original observations themselves.
+$T_n$ is a sufficient statistic of $\mathbf{X}$ for $S$ if and only if
 
-%-------------------------------------------------
+\[
+f_{X|T,S}(x|t,s) = f_{X|T}(x|t).
+\]
 
-\chapter{Methodology}
+In our specific case, this turns out to be true so that the sample mean is a
+sufficient statistic of $\mathbf{X}$ for $S$. We can use the sample mean
+$T_n$ to estimate $S$ and be confident that we have not lost any information.
+Specifically, we will estimate $S$ as follows:
 
-\section{System Overview}
+\[
+\hat{S} =
+\begin{cases}
+m, & \text{if } T_n \ge 0,\\[4pt]
+-m, & \text{otherwise}.
+\end{cases}
+\]
 
-\section{Hardware Design}
+\subsection{Report Organization}
+The project is 25 project points which is equivalent to 5\% of the total grade percentage as extra credit.   The project must be completed to earn an A+ grade.\\
+There are 8 problems, each answer must have a Matlab plot to back up the answer. \\
 
-\subsection{Components}
-Description.
-
-\subsection{Circuit Design}
-Description.
-
-\section{Software Design}
-
-\subsection{Algorithms}
-Description.
-
-\subsection{Implementation}
-Description.
-
-%-------------------------------------------------
-
-\chapter{Results}
-
-\section{Experimental Setup}
-
-\section{Data Collection}
-
-\section{Performance Evaluation}
-
-\subsection{Test 1}
-Results.
-
-\subsection{Test 2}
-Results.
-
-%-------------------------------------------------
-
-\chapter{Discussion}
-
-\section{Analysis of Results}
-
-\section{Limitations}
-
-\section{Future Improvements}
+Project Statement:\\
+\noindent \href{https://drive.google.com/drive/folders/1uo9Ji4P91C4RJN64mATiQfMw05c1TiUV}{ECE 131a Spring 2026 Extra Credit Project, Distributed Detection in Gaussian Noise}
 
 %-------------------------------------------------
 
-\chapter{Conclusion}
+\section{Problem 1}
+3pts.\\
 
-\section{Summary}
+\hrule 
 
-\section{Contributions}
+\
 
-\section{Future Work}
+\noindent Suppose that $m = 0.5$. Use Matlab function \texttt{semilogy} to plot the probability of error $P(\hat{S} \neq S)$ as a function of the number of sensors $n$ for $1 \leq n \leq 100$. The Matlab function \texttt{qfunc} is your friend for this problem. How many sensors do you need so that $P(\hat{S} \neq S) < 10^{-3}$? Call this number $n_g$ (as in the number of Gaussian samples).\\
 
-%-------------------------------------------------
-% References
-%-------------------------------------------------
-
-\begin{thebibliography}{99}
-
-\bibitem{ref1}
-Author, \textit{Title}, Publisher, Year.
-
-\end{thebibliography}
+\hrule
 
 %-------------------------------------------------
-% Appendices
-%-------------------------------------------------
 
-\appendix
-
-\chapter{Additional Data}
-
-\section{Raw Measurements}
-
-\chapter{Source Code}
-
-\section{Important Functions}
 
 \end{document}
