@@ -28,7 +28,7 @@
 \contentsline {subsection}{\numberline {6.3}Matlab Code}{23}{subsection.6.3}%
 \contentsline {subsection}{\numberline {6.4}Results}{24}{subsection.6.4}%
 \contentsline {subsection}{\numberline {6.5}Interpretation of Results}{24}{subsection.6.5}%
-\contentsline {section}{\numberline {7}Problem 6}{25}{section.7}%
-\contentsline {section}{\numberline {8}Problem 7}{26}{section.8}%
-\contentsline {section}{\numberline {9}Problem 8}{27}{section.9}%
-\contentsline {section}{\numberline {10}Conclusion}{28}{section.10}%
+\contentsline {section}{\numberline {7}Problem 6}{26}{section.7}%
+\contentsline {section}{\numberline {8}Problem 7}{27}{section.8}%
+\contentsline {section}{\numberline {9}Problem 8}{28}{section.9}%
+\contentsline {section}{\numberline {10}Conclusion}{29}{section.10}%

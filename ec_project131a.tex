@@ -1341,9 +1341,47 @@ fprintf('-----------------------------------\n');
 \end{lstlisting}
 
 \subsection{Results}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/p5_results.png}
+    \caption{MATLAB command window output for Problem 5.}
+\end{figure}
 
 \subsection{Interpretation of Results}
 
+The MATLAB simulation was performed using the binary sensor system with
+\[
+n_b=61
+\]
+sensors, which was identified in Problem 4 as the minimum odd number of binary sensors required to achieve a probability of error below \(10^{-3}\). The simulation continued until \(200\) detection errors were observed, after which the probability of error was estimated using
+\[
+\hat{P}_e=\frac{200}{K}.
+\]
+The simulation required
+\[
+K=201{,}793
+\]
+total runs to accumulate the \(200\) errors. This resulted in an estimated probability of error of
+\[
+\hat{P}_e
+=
+9.911147\times10^{-4}.
+\]
+The theoretical probability of error obtained in Problem 4 was
+\[
+P_e(61)
+=
+8.951301\times10^{-4}.
+\]
+Comparing these values shows that the simulated probability of error is very close to the theoretical prediction. The difference between the two values is expected because the simulation relies on randomly generated Gaussian noise samples. Each execution of the simulation produces a different sequence of noise realizations, causing slight variations in the estimated error probability.\\
+
+Despite these random fluctuations, the simulated result remains on the same order of magnitude as the theoretical value and is still below the target threshold of
+\[
+10^{-3}.
+\]
+This close agreement verifies the analytical result obtained in Problem 4 and confirms that a binary sensor system using \(61\) sensors achieves the desired level of reliability.\\
+
+Furthermore, the results demonstrate that the majority-vote detector that I derived in Problem 3 accurately models the behavior of the binary sensor system. This simulation confirms that the binomial probability calculations used in Problem 4 provide an accurate prediction of system performance, meaning both the theoretical analysis and the detector design conforms to my hypotheses.
 \clearpage
 
 \section{Problem 6}
