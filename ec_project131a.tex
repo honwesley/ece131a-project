@@ -902,6 +902,193 @@ If \(n\) is even, a tie occurs when \(U_n=n/2\). The tie-breaking rule may favor
 
 \hrule
 
+\subsection{Preliminary Remarks}
+In Problem 3, the full-precision sensor was replaced with a binary sensor that records only whether the observation is positive or negative. Rather than observing the real-valued quantity
+
+\[
+X_i=S+Z_i,
+\]
+
+each sensor produces the binary output
+
+\[
+B_i=
+\begin{cases}
+1, & X_i\geq 0,\\
+0, & X_i<0.
+\end{cases}
+\]
+
+The sufficient statistic for this binary sensor system is
+
+\[
+U_n=\sum_{i=1}^{n}B_i,
+\]
+
+which counts the number of sensors reporting a value of \(1\).\\
+
+In Problem 3, it was shown that the maximum-likelihood detector reduces to a majority-vote decoder. Therefore, when \(S=0.5\), a detection error occurs whenever the majority of the sensors vote incorrectly. Since the problem specifies that only odd values of \(n\) need to be considered, ties are not possible, and the decision rule is straightforward.\\
+
+The objective of this problem is to determine the probability of error of the binary sensor system as a function of $n$ (the number of sensors) and compare its performance to the full-precision sensor system from Problems 1 and 2. Both error probability curves must be plotted on the same semilogarithmic graph, and the minimum odd number of binary sensors required to achieve an error probability below \(10^{-3}\) will be identified.
+
+\subsection{Answer}
+
+From Problem 3,
+
+\[
+p=P(B_i=1|S=0.5)
+=
+\Phi(0.5)
+\approx 0.6915.
+\]
+
+Since each \(B_i\) is a Bernoulli random variable and the sensors operate independently,
+
+\[
+U_n|S=0.5
+\sim
+\text{Binomial}(n,p).
+\]
+
+The majority-vote detector decides \(\hat{S}=0.5\) whenever more than half of the sensors report \(B_i=1\). Because only odd values of $n$ are considered, ties are not possible.\\
+
+When \(S=0.5\), an error occurs whenever the number of positive votes is less than a majority. Therefore,
+
+\[
+P_e(n)
+=
+P\!\left(
+U_n\leq \frac{n-1}{2}
+\,\middle|\,
+S=0.5
+\right).
+\]
+
+Since \(U_n\) follows a binomial distribution, the probability of error can be written as
+
+\[
+P_e(n)
+=
+\sum_{u=0}^{(n-1)/2}
+\binom{n}{u}
+p^u
+(1-p)^{n-u}.
+\]
+
+This probability was evaluated in MATLAB using the \texttt{binocdf} function for all odd values of \(n\) between \(1\) and \(100\).\\
+
+Comparing the full-precision sensor system from Problem 1, the corresponding probability of error for the full-precision system is:
+\[
+P_e^{\text{full}}
+=
+Q(0.5\sqrt{n}).
+\]
+
+Using MATLAB, the binary-sensor probability of error was computed and the smallest odd value of \(n\) satisfying
+\[
+P_e(n)<10^{-3}
+\]
+
+was determined.\\
+
+The calculations show that
+\[
+\boxed{n_b=57}.
+\]
+
+Therefore, the binary sensor system requires \(57\) sensors to achieve a probability of error below \(10^{-3}\).
+
+\subsection{Matlab Code}
+
+\begin{lstlisting}[language=Matlab, caption={Matlab Code: Problem 4}]
+clc;
+clear;
+close all;
+
+%% Problem 4
+% Comparison of Full-Precision and Binary Sensors
+
+m = 0.5;
+
+% Probability that a binary sensor outputs 1 when S = 0.5
+p = normcdf(0.5);
+
+% Full precision sensor values
+n_full = 1:100;
+Pe_full = qfunc(m .* sqrt(n_full));
+
+% Binary sensor values (odd n only)
+n_binary = 1:2:99;
+Pe_binary = zeros(size(n_binary));
+
+for k = 1:length(n_binary)
+
+    n = n_binary(k);
+
+    % Error occurs when majority vote is incorrect
+    threshold = (n - 1)/2;
+
+    Pe_binary(k) = binocdf(threshold, n, p);
+
+end
+
+% Find smallest odd n such that Pe < 10^-3
+target = 1e-3;
+
+index = find(Pe_binary < target, 1, 'first');
+
+nb = n_binary(index);
+
+%% Plot
+
+figure;
+
+semilogy(n_full, Pe_full, 'LineWidth', 2);
+hold on;
+grid on;
+
+semilogy(n_binary, Pe_binary, 'o-', 'LineWidth', 2);
+
+yline(target,'--','10^{-3}','LineWidth',1.5);
+
+semilogy(nb,Pe_binary(index),'s',...
+    'MarkerSize',8,...
+    'LineWidth',2);
+
+xlabel('Number of Sensors, n');
+ylabel('Probability of Error');
+title('Probability of Error for Full-Precision and Binary Sensor Systems');
+
+legend('Full-Precision Sensors',...
+       'Binary Sensors',...
+       'Threshold = 10^{-3}',...
+       sprintf('n_b = %d',nb),...
+       'Location','southwest');
+
+%% Results
+
+fprintf('\n');
+fprintf('-----------------------------------\n');
+fprintf('Problem 4 Results\n');
+fprintf('-----------------------------------\n');
+fprintf('p = %.6f\n', p);
+fprintf('Minimum odd number of binary sensors n_b = %d\n', nb);
+fprintf('Probability of error at n_b = %.6e\n', Pe_binary(index));
+
+if index > 1
+    fprintf('Probability of error at previous odd n = %d is %.6e\n', ...
+        n_binary(index-1), Pe_binary(index-1));
+end
+
+fprintf('-----------------------------------\n');
+\end{lstlisting}
+
+\subsection{Results (from Matlab)}
+
+
+\subsection{Interpretation of Results}
+
+
 \clearpage
 
 \section{Problem 5}
