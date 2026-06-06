@@ -1700,73 +1700,115 @@ The detector uses majority vote. For odd \(n\), there is no possibility of a tie
 
 The goal is to show that for any odd number of sensors \(n\), the total probability of error using \(n\) sensors is the same as the total probability of error using \(n+1\) sensors.
 
-\subsection{MATLAB Verification}
-
-The equality can first be checked numerically using MATLAB's \texttt{binocdf} function. If \(n\) is odd, then an error occurs when the number of sensors reporting \(1\) is less than a majority. Therefore, when \(S=m\),
-
-\[
-P_e(n)=P\left(U_n\leq \frac{n-1}{2}\right).
-\]
-
-For \(n+1\) sensors, where \(n+1\) is even, ties are broken in favor of \(\hat{S}=m\). Therefore, when \(S=m\), a tie is not an error. An error occurs only when fewer than half of the sensors report \(1\). Since \(n+1\) is even, this condition becomes
-
-\[
-U_{n+1}\leq \frac{n-1}{2}.
-\]
-
-Thus, MATLAB can compare
-
-\[
-P\left(U_n\leq \frac{n-1}{2}\right)
-\]
-
-with
-
-\[
-P\left(U_{n+1}\leq \frac{n-1}{2}\right).
-\]
-
-These quantities can be evaluated using \texttt{binocdf}. The computed results confirm that the total probability of error for \(n\) sensors is equal to the total probability of error for \(n+1\) sensors when \(n\) is odd.
-
 \subsection{Proof}
 
 Let \(n\) be odd, so
-
 \[
 n=2k+1.
 \]
-
 For \(n=2k+1\) sensors, the majority-vote detector makes an error when \(S=m\) if at most \(k\) sensors report \(1\). Therefore,
-
 \[
 P_e(2k+1)
 =
 P(U_{2k+1}\leq k).
 \]
-
-Now consider \(n+1=2k+2\) sensors. Since this is even, a tie can occur when exactly \(k+1\) sensors report \(1\). If ties are broken in favor of \(\hat{S}=m\), then when \(S=m\), the tie is correct. Therefore, an error still only occurs when at most \(k\) sensors report \(1\):
-
+Consider \(n+1=2k+2\) sensors. Since this is even, a tie can occur when exactly \(k+1\) sensors report \(1\). If ties are broken in favor of \(\hat{S}=m\), then when \(S=m\), the tie is correct. Therefore, an error still only occurs when at most \(k\) sensors report \(1\):
 \[
 P_e(2k+2)
 =
 P(U_{2k+2}\leq k).
 \]
-
-Adding one more sensor to \(2k+1\) sensors only changes the decision when the original \(2k+1\) sensors are tied as closely as possible, meaning exactly \(k+1\) vote correctly and \(k\) vote incorrectly. In the even case, the extra sensor can create a tie, but the tie-breaking rule simply assigns that tie to one of the two hypotheses. Since the two transmitted signals are equally likely, the tie cases that help one hypothesis hurt the other by the same amount. Therefore, the average probability of error does not change.
+Adding one more sensor to \(2k+1\) sensors only changes the decision when the original \(2k+1\) sensors are tied as closely as possible, meaning exactly \(k+1\) vote correctly and \(k\) vote incorrectly. In the even case, the extra sensor can create a tie, but the tie-breaking rule simply assigns that tie to one of the two hypotheses. Since the two transmitted signals are equally likely, the tie cases that help one hypothesis hurt the other by the same amount. Therefore, the average probability of error does not change even or odd.\\
 
 Thus,
-
 \[
 P_e(2k+1)=P_e(2k+2).
 \]
-
 Since \(n=2k+1\), we conclude that
-
 \[
 \boxed{P_e(n)=P_e(n+1)}
 \]
-
 for every odd value of \(n\).
+
+\subsection{MATLAB Code}
+\begin{lstlisting}[language=Matlab, caption={Matlab Code: Problem 7}]
+clc;
+clear;
+close all;
+
+%% Problem 7
+% Verify that P_e(n) = P_e(n+1) for odd n
+
+p = normcdf(0.5);
+
+odd_n = [1 3 5 11 21 41 61];
+
+fprintf('\n');
+fprintf('-------------------------------------------------\n');
+fprintf('Problem 7 Verification\n');
+fprintf('-------------------------------------------------\n');
+fprintf('p = %.6f\n\n', p);
+
+for k = 1:length(odd_n)
+
+    n = odd_n(k);
+
+    % Probability of error for odd n
+    Pe_n = binocdf((n-1)/2, n, p);
+
+    % Probability of error for even n+1
+    % Ties broken in favor of m
+    Pe_np1 = 0.5 * ...
+        ( binocdf((n-1)/2, n+1, p) + ...
+          1 - binocdf((n-1)/2, n+1, 1-p) );
+
+    fprintf('n = %2d    Pe(n)   = %.12e\n', n, Pe_n);
+    fprintf('n = %2d    Pe(n+1) = %.12e\n', n+1, Pe_np1);
+    fprintf('Difference = %.12e\n\n', abs(Pe_n - Pe_np1));
+
+end
+
+fprintf('-------------------------------------------------\n');
+\end{lstlisting}
+
+\subsection{Results}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/p7_results.png}
+    \caption{MATLAB command prompt output for Problem 7.}
+    \label{fig:problem1}
+\end{figure}
+
+MATLAB was used to verify the property that, for the binary sensor system, the probability of error for an odd number of sensors \(n\) is equal to the probability of error for \(n+1\) sensors. The value
+\[
+p=P(B_i=1|S=0.5)=0.691462
+\]
+was used in the binomial error probability calculation.\\
+
+Several odd values of \(n\) were tested, including
+\[
+n=1,3,5,11,21,41,61.
+\]
+For each odd value of \(n\), MATLAB computed \(P_e(n)\) and compared it to \(P_e(n+1)\). As shown in Figure 10, the two probabilities agree for each pair tested. The small nonzero differences shown in the output are on the order of \(10^{-16}\), which is due to numerical roundoff error rather than an actual difference in probability.\\
+
+For example, when \(n=61\),
+\[
+P_e(61)=8.951301218723\times 10^{-4}
+\]
+and
+\[
+P_e(62)=8.951301218723\times 10^{-4}.
+\]
+The computed difference is approximately
+\[
+4.737963493762\times 10^{-17},
+\]
+which is essentially zero. Therefore, the MATLAB results confirm the expected equality
+\[
+\boxed{P_e(n)=P_e(n+1)}
+\]
+for the tested odd values of \(n\).
 
 \clearpage
 
