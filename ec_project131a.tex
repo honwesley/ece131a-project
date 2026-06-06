@@ -1414,77 +1414,51 @@ Although binary sensors lose information by reducing each observation to a singl
 \subsection{Answer}
 
 From Problem 1, the full-precision sensor system requires
-
 \[
 n_g=39
 \]
-
 sensors to achieve
-
 \[
 P(\hat{S}\neq S)<10^{-3}.
 \]
-
 Let the cost of one full-precision sensor be normalized to \(1\). Then the total cost of the full-precision sensor system is
-
 \[
 C_{\text{full}}=39(1).
 \]
-
-Thus,
-
 \[
 C_{\text{full}}=39.
 \]
-
 From Problem 4, the binary sensor system requires
-
 \[
 n_b=61
 \]
 
 sensors to achieve the same probability of error threshold. Since each binary sensor costs half as much as a full-precision sensor, the cost of each binary sensor is
-
 \[
 \frac{1}{2}.
 \]
-
 Therefore, the total cost of the binary sensor system is
-
 \[
 C_{\text{binary}}=61\left(\frac{1}{2}\right).
 \]
-
-So,
-
 \[
 C_{\text{binary}}=30.5.
 \]
-
-Comparing the two costs gives
-
+Comparing the two costs:
 \[
 C_{\text{binary}}=30.5
 \]
-
-and
-
 \[
 C_{\text{full}}=39.
 \]
-
 Since
-
 \[
 30.5<39,
 \]
-
 the binary sensor system costs less to achieve a probability of error below \(10^{-3}\).
-
 \[
 \boxed{C_{\text{binary}}<C_{\text{full}}}
 \]
-
 Therefore, even though the binary sensor system requires more sensors, it is still less expensive overall because each binary sensor costs only half as much as a full-precision sensor.
 
 \subsection{Discussion of Lower Error Probabilities}
