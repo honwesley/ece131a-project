@@ -416,6 +416,7 @@ Therefore, \(n=38\) is not enough, since its error probability is still above \(
  
 \
 
+\subsection{Preliminary Remarks}
 In this problem, we should verify the result calculated in Problem 1 using a Matlab simulation. It was figured out that the minimum number of sensors required to make the probability of error less than $10^{-3}$ was found to be
 
 \[
@@ -487,6 +488,129 @@ simulation runs are expected. This gives
 \end{center}
 
 Therefore, the simulation should require around $220,000$ runs before reaching \(200\) errors. The exact value of \(K\) may vary each time the simulation is run because the Gaussian noise samples are random. However, if the simulation is correct, the estimated probability of error \(200/K\) should be close to \(10^{-3}\), confirming the theoretical result that I calculated in Problem 1. 
+
+
+\subsection{Matlab Code}
+\begin{lstlisting}[language=Matlab, caption={Matlab Code: Problem 1}]
+clc;
+clear;
+close all;
+
+%% Problem 2
+% Simulation of full-precision sensor system
+
+m = 0.5;                  % Signal amplitude
+S = 0.5;                  % Transmitted signal for simulation
+ng = 39;                  % Number of sensors calculated from p1
+
+target_errors = 200;      % Stop simulation after 200 errors
+num_errors = 0;           % Error counter
+K = 0;                    % Total simulation runs
+
+%% Simulation Loop
+
+while num_errors < target_errors
+    
+    % Increase simulation run counter
+    K = K + 1;
+    
+    % Generate ng independent Gaussian noise samples
+    Z = normrnd(0, 1, [1, ng]);
+    
+    % Generate sensor observations
+    X = S + Z;
+    
+    % Compute sufficient statistic
+    T = mean(X);
+    
+    % Decision rule
+    if T >= 0
+        S_hat = 0.5;
+    else
+        S_hat = -0.5;
+    end
+    
+    % Check if an error occurred
+    if S_hat ~= S
+        num_errors = num_errors + 1;
+    end
+end
+
+%% Compute Error Probability
+
+Pe_sim = target_errors / K;
+Pe_theory = qfunc(m * sqrt(ng));
+
+%% Display Results
+
+fprintf('\n');
+fprintf('-----------------------------------\n');
+fprintf('Problem 2 Simulation Results\n');
+fprintf('-----------------------------------\n');
+fprintf('Number of sensors n_g = %d\n', ng);
+fprintf('Target number of errors = %d\n', target_errors);
+fprintf('Total number of simulation runs K = %d\n', K);
+fprintf('Estimated error probability = 200/K = %.6e\n', Pe_sim);
+fprintf('Theoretical error probability = %.6e\n', Pe_theory);
+fprintf('-----------------------------------\n');
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/p2_results.png}
+    \caption{Problem 2 MATLAB simulation output (Run 1).}
+    \label{fig:problem1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/p2_results2.png}
+    \caption{Problem 2 MATLAB simulation output (Run 2).}
+\end{figure}
+
+\subsection{Interpretation of Results}
+
+The MATLAB simulation was performed twice using the full-precision sensor system with \(n_g=39\) sensors. In each trial, the simulation continued until \(200\) detection errors were observed. The probability of error was then estimated using
+
+\[
+\hat{P}_e=\frac{200}{K},
+\]
+
+where \(K\) is the total number of simulation runs required to accumulate \(200\) errors.\\
+
+For Run 1, the simulation required
+
+\[
+K=220{,}803
+\]
+
+trials, resulting in an estimated probability of error of
+
+\[
+\hat{P}_{e,1}=9.057848\times10^{-4}.
+\]
+
+For Run 2, the simulation required
+
+\[
+K=215{,}256
+\]
+
+trials, resulting in an estimated probability of error of
+
+\[
+\hat{P}_{e,2}=9.291262\times10^{-4}.
+\]
+
+These values are very close to the theoretical probability of error obtained earlier, 
+
+\[
+P_e(39)=8.966136\times10^{-4}.
+\]
+
+The small differences between the simulated and theoretical values are expected because the simulation relies on randomly generated Gaussian noise samples. Each simulation run produces a different outcome of the noise process, causing slight variations in the estimated error probability. Despite these random fluctuations, both simulation results are within a few percent of the theoretical prediction.\\
+
+The results therefore confirm the analysis from Problem 1. Both simulation trials produced error probabilities on the order of \(10^{-3}\), demonstrating that 39 sensors are sufficient to achieve the desired level of reliability. The close agreement between the theoretical and simulated probabilities of error verifies that the sample mean detector does accurately model the performance of the full-precision sensor system.
 
 \clearpage
 

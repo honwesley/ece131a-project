@@ -7,7 +7,7 @@ close all;
 
 m = 0.5;                  % Signal amplitude
 S = 0.5;                  % Transmitted signal for simulation
-ng = 39;                  % Number of sensors from Problem 1
+ng = 39;                  % Number of sensors calculated from p1
 
 target_errors = 200;      % Stop simulation after 200 errors
 num_errors = 0;           % Error counter
