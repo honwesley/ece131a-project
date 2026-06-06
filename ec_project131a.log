@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.13)  5 JUN 2026 22:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.13)  5 JUN 2026 23:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -459,12 +459,12 @@ Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on in
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 293.
  [3] [4]
-<images/p1_graph.png, id=316, 1196.97188pt x 603.75563pt>
+<images/p1_graph.png, id=336, 1196.97188pt x 603.75563pt>
 File: images/p1_graph.png Graphic file (type png)
 <use images/p1_graph.png>
 Package pdftex.def Info: images/p1_graph.png  used on input line 357.
 (pdftex.def)             Requested size: 452.9679pt x 228.4714pt.
-<images/p1_results.png, id=318, 275.52937pt x 116.68594pt>
+<images/p1_results.png, id=338, 275.52937pt x 116.68594pt>
 File: images/p1_results.png Graphic file (type png)
 <use images/p1_results.png>
 Package pdftex.def Info: images/p1_results.png  used on input line 364.
@@ -474,12 +474,12 @@ Package pdftex.def Info: images/p1_results.png  used on input line 364.
 ] [7
 
 ] [8]
-<images/p2_results.png, id=376, 289.83281pt x 118.19156pt>
+<images/p2_results.png, id=396, 289.83281pt x 118.19156pt>
 File: images/p2_results.png Graphic file (type png)
 <use images/p2_results.png>
 Package pdftex.def Info: images/p2_results.png  used on input line 560.
 (pdftex.def)             Requested size: 317.07614pt x 129.30957pt.
-<images/p2_results2.png, id=377, 287.57437pt x 111.41624pt>
+<images/p2_results2.png, id=397, 287.57437pt x 111.41624pt>
 File: images/p2_results2.png Graphic file (type png)
 <use images/p2_results2.png>
 Package pdftex.def Info: images/p2_results2.png  used on input line 567.
@@ -489,12 +489,12 @@ Package pdftex.def Info: images/p2_results2.png  used on input line 567.
 ] [12] [13] [14] [15
 
 ] [16] [17]
-<images/p4_graph.png, id=521, 1621.55812pt x 887.56593pt>
+<images/p4_graph.png, id=542, 1621.55812pt x 887.56593pt>
 File: images/p4_graph.png Graphic file (type png)
 <use images/p4_graph.png>
 Package pdftex.def Info: images/p4_graph.png  used on input line 1090.
 (pdftex.def)             Requested size: 452.9679pt x 247.9344pt.
-<images/p4_results.png, id=522, 335.75438pt x 98.61844pt>
+<images/p4_results.png, id=543, 335.75438pt x 98.61844pt>
 File: images/p4_results.png Graphic file (type png)
 <use images/p4_results.png>
 Package pdftex.def Info: images/p4_results.png  used on input line 1097.
@@ -502,7 +502,7 @@ Package pdftex.def Info: images/p4_results.png  used on input line 1097.
  [18 <./images/p4_graph.png>] [19 <./images/p4_results.png>] [20] [21
 
 ] [22] [23]
-<images/p5_results.png, id=622, 290.58563pt x 115.18031pt>
+<images/p5_results.png, id=643, 290.58563pt x 115.18031pt>
 File: images/p5_results.png Graphic file (type png)
 <use images/p5_results.png>
 Package pdftex.def Info: images/p5_results.png  used on input line 1346.
@@ -529,12 +529,12 @@ Overfull \hbox (1.59851pt too wide) in paragraph at lines 1544--1546
 [][][][] 
  []
 
-<images/p6_graph.png, id=742, 1589.94pt x 888.31876pt>
+<images/p6_graph.png, id=762, 1589.94pt x 888.31876pt>
 File: images/p6_graph.png Graphic file (type png)
 <use images/p6_graph.png>
 Package pdftex.def Info: images/p6_graph.png  used on input line 1584.
 (pdftex.def)             Requested size: 452.9679pt x 253.0786pt.
-<images/p6_results.png, id=743, 446.41782pt x 124.96687pt>
+<images/p6_results.png, id=763, 446.41782pt x 124.96687pt>
 File: images/p6_results.png Graphic file (type png)
 <use images/p6_results.png>
 Package pdftex.def Info: images/p6_results.png  used on input line 1590.
@@ -542,7 +542,7 @@ Package pdftex.def Info: images/p6_results.png  used on input line 1590.
 [29] [30 <./images/p6_graph.png> <./images/p6_results.png>] [31] [32
 
 ] [33]
-<images/p7_results.png, id=846, 282.30469pt x 438.13687pt>
+<images/p7_results.png, id=866, 282.30469pt x 438.13687pt>
 File: images/p7_results.png Graphic file (type png)
 <use images/p7_results.png>
 Package pdftex.def Info: images/p7_results.png  used on input line 1778.
@@ -556,21 +556,21 @@ Package pdftex.def Info: images/p7_results.png  used on input line 1778.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `ec_project131a.out' has not changed.
-(rerunfilecheck)             Checksum: 29EE417D7CD5D548DD9420DC91473F17;5294.
+(rerunfilecheck)             Checksum: 4032950B425E6A59A737CA357975E954;5848.
  ) 
 Here is how much of TeX's memory you used:
- 14917 strings out of 478268
- 228179 string characters out of 5846347
+ 14925 strings out of 478268
+ 228299 string characters out of 5846347
  964655 words of memory out of 5000000
- 32418 multiletter control sequences out of 15000+600000
+ 32422 multiletter control sequences out of 15000+600000
  486757 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,13n,63p,873b,2454s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfit1095.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on ec_project131a.pdf (39 pages, 687364 bytes).
+Output written on ec_project131a.pdf (39 pages, 689249 bytes).
 PDF statistics:
- 1072 PDF objects out of 1200 (max. 8388607)
- 959 compressed objects within 10 object streams
- 522 named destinations out of 1000 (max. 500000)
- 395 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1093 PDF objects out of 1200 (max. 8388607)
+ 980 compressed objects within 10 object streams
+ 526 named destinations out of 1000 (max. 500000)
+ 427 words of extra memory for PDF output out of 10000 (max. 10000000)
 
