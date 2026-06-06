@@ -491,7 +491,7 @@ Therefore, the simulation should require around $220,000$ runs before reaching \
 
 
 \subsection{Matlab Code}
-\begin{lstlisting}[language=Matlab, caption={Matlab Code: Problem 1}]
+\begin{lstlisting}[language=Matlab, caption={Matlab Code: Problem 2}]
 clc;
 clear;
 close all;
@@ -650,6 +650,244 @@ Show that the maximum-likelihood decoder turns out to be a majority vote decoder
 
 \hrule
 
+\subsection{part A}
+\subsubsection{Preliminary Remarks}
+
+In Problems 1 and 2, each sensor measured the full-precision observation
+
+\[
+X_i=S+Z_i,
+\]
+
+where \(S\in\{-0.5,0.5\}\) and \(Z_i\sim N(0,1)\). In Problem 3, the sensors are simplified so that they no longer record the full value of \(X_i\). Instead, each sensor records only whether its observation is positive or negative.\\
+
+The binary sensor output is defined as
+
+\[
+B_i=
+\begin{cases}
+1, & X_i\geq 0,\\
+0, & X_i<0.
+\end{cases}
+\]
+
+The sufficient statistic for the collection of binary observations is
+
+\[
+U_n=\sum_{i=1}^{n} B_i,
+\]
+
+which counts the total number of sensors that report a value of \(1\). The goal of this problem is to identify the distributions of \(B_i\) and \(U_n\). Then, determine the value of
+
+\[
+p=P(B_i=1|S=0.5).
+\]
+
+\subsubsection{Answer}
+
+Since \(B_i\) can only take the values \(0\) and \(1\), it is a Bernoulli random variable.\\
+
+Because \(U_n\) is the sum of \(n\) independent Bernoulli random variables, \(U_n\) follows a binomial distribution.\\
+
+For \(S=0.5\),
+
+\[
+X_i=0.5+Z_i.
+\]
+
+The probability that a sensor reports \(B_i=1\) is
+
+\[
+p=P(B_i=1|S=0.5).
+\]
+\[
+p=P(X_i\geq 0|S=0.5).
+\]
+
+Substituting \(X_i=0.5+Z_i\),
+
+\[
+p=P(0.5+Z_i\geq 0).
+\]
+\[
+p=P(Z_i\geq -0.5).
+\]
+
+By symmetry of the standard normal distribution,
+
+\[
+P(Z_i\geq -0.5)=P(Z_i\leq 0.5).
+\]
+
+Therefore,
+
+\[
+p=\Phi(0.5).
+\]
+
+Using the standard normal cumulative distribution function,
+
+\[
+p=\Phi(0.5)\approx 0.6915.
+\]
+
+Thus,
+
+\[
+\boxed{p\approx 0.6915}.
+\]
+
+Therefore,
+
+\[
+\boxed{B_i|S=0.5 \sim \text{Bernoulli}(0.6915)}
+\]
+
+and
+
+\[
+\boxed{U_n|S=0.5 \sim \text{Binomial}(n,0.6915)}
+\]
+
+Similarly,
+
+\[
+P(B_i=1|S=-0.5)=1-p\approx 0.3085,
+\]
+\[
+\boxed{U_n|S=-0.5 \sim \text{Binomial}(n,1-p)}
+\]
+
+\subsection{part B}
+
+\subsubsection{Preliminary Remarks}
+
+The problem states that the estimate \(\hat{S}\) should be chosen according to the maximum-likelihood principle. Under maximum-likelihood detection, the detector selects the value of \(S\) that makes the observed value of the sufficient statistic \(U_n\) most likely.\\
+
+The decision rule is
+
+\[
+\hat{S}=
+\begin{cases}
+0.5, & P(U_n=u|S=0.5)>
+P(U_n=u|S=-0.5),\\
+-0.5, & \text{otherwise}.
+\end{cases}
+\]
+
+Since Part A showed that \(U_n\) follows a binomial distribution under both hypotheses, the likelihood functions can be written explicitly and compared. The goal is to simplify the maximum-likelihood rule and interpret its representation. 
+
+\subsubsection{Answer}
+
+From Part (a),
+
+\[
+U_n|S=0.5
+\sim
+\text{Binomial}(n,p)
+\]
+\[
+U_n|S=-0.5
+\sim
+\text{Binomial}(n,1-p).
+\]
+
+Therefore,
+
+\[
+P(U_n=u|S=0.5)
+=
+\binom{n}{u}
+p^u
+(1-p)^{n-u}
+\]
+\[
+P(U_n=u|S=-0.5)
+=
+\binom{n}{u}
+(1-p)^u
+p^{n-u}.
+\]
+
+The maximum-likelihood detector chooses \(S=0.5\) whenever
+
+\[
+\binom{n}{u}
+p^u
+(1-p)^{n-u}
+>
+\binom{n}{u}
+(1-p)^u
+p^{n-u}.
+\]
+\[
+p^u(1-p)^{n-u}
+>
+(1-p)^u p^{n-u}.
+\]
+
+Dividing both sides by
+\((1-p)^{n-u}p^{n-u}\)
+gives
+
+\[
+\left(
+\frac{p}{1-p}
+\right)^u
+>
+\left(
+\frac{p}{1-p}
+\right)^{n-u}.
+\]
+
+Since
+
+\[
+p=\Phi(0.5)\approx0.6915>0.5,
+\]
+
+then: 
+
+\[
+\frac{p}{1-p}>1.
+\]
+
+\
+
+Therefore, the inequality is determined by the exponents:
+
+\[
+u>n-u.
+\]
+\[
+2u>n.
+\]
+
+Thus,
+
+\[
+u>\frac{n}{2}.
+\]
+
+The resulting decision rule is
+
+\[
+\hat{S}=
+\begin{cases}
+0.5, & U_n>\frac{n}{2},\\
+-0.5, & U_n\leq\frac{n}{2}.
+\end{cases}
+\]
+
+This means the detector chooses \(S=0.5\) whenever a majority of the sensors report \(B_i=1\). Otherwise, it chooses \(S=-0.5\).
+
+Therefore,
+
+\[
+\boxed{\text{The maximum-likelihood decoder is a majority-vote decoder.}}
+\]
+
+If \(n\) is even, a tie occurs when \(U_n=n/2\). The tie-breaking rule may favor one outcome, but it does not affect the overall probability of error when both signal values are equally likely.\\
 \clearpage
 
 \section{Problem 4}
