@@ -1095,7 +1095,7 @@ fprintf('-----------------------------------\n');
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{images/p4_results.png}
-    \caption{Probability of error as a function of the number of sensors for $m=0.5$.}
+    \caption{Figure 7: MATLAB command window output for Problem 4.}
     \label{fig:problem1}
 \end{figure}
 
@@ -1461,38 +1461,197 @@ the binary sensor system costs less to achieve a probability of error below \(10
 \]
 Therefore, even though the binary sensor system requires more sensors, it is still less expensive overall because each binary sensor costs only half as much as a full-precision sensor.
 
-\subsection{Discussion of Lower Error Probabilities}
+\subsection{Matlab Code}
 
-The second part of the problem asks whether the same system would remain the most cost effective for lower probabilities of error. This requires comparing the slopes of the probability-of-error curves.
+\begin{lstlisting}[language=Matlab, caption={Matlab Code: Problem 6}]
+clc;
+clear;
+close all;
 
-The full-precision sensor curve decreases more rapidly than the binary sensor curve as the number of sensors increases. This is expected because full-precision sensors preserve the entire real-valued observation \(X_i\), while binary sensors only preserve the sign of the observation. Therefore, each full-precision sensor provides more information than each binary sensor.
+%% Problem 6
+% Cost comparison for full-precision and binary sensors
+% at multiple probability of error thresholds
 
-However, cost effectiveness depends on error probability as a function of cost, not just error probability as a function of sensor count. Since each binary sensor costs half as much, the binary system can use approximately twice as many sensors for the same total cost. At the \(10^{-3}\) threshold, this makes the binary system cheaper:
+m = 0.5;
+
+% Binary sensor probability
+p = normcdf(0.5);
+
+% Search range for number of sensors
+n_max = 1000;
+n_full = 1:n_max;
+n_binary = 1:2:n_max;   % odd n only for binary sensors
+
+%% Compute probability of error for full-precision sensors
+
+Pe_full = qfunc(m .* sqrt(n_full));
+
+%% Compute probability of error for binary sensors
+
+Pe_binary = zeros(size(n_binary));
+
+for k = 1:length(n_binary)
+    
+    n = n_binary(k);
+    
+    % For odd n, majority vote error when U <= (n-1)/2
+    threshold = (n - 1)/2;
+    
+    Pe_binary(k) = binocdf(threshold, n, p);
+    
+end
+
+%% Thresholds to test
+
+targets = [1e-3, 1e-4, 1e-5, 1e-6];
+
+fprintf('\n');
+fprintf('---------------------------------------------------------------\n');
+fprintf('Problem 6 Cost Comparison\n');
+fprintf('---------------------------------------------------------------\n');
+fprintf('Target Pe\tFull n\tFull Cost\tBinary n\tBinary Cost\tCheaper\n');
+fprintf('---------------------------------------------------------------\n');
+
+for j = 1:length(targets)
+    
+    target = targets(j);
+    
+    % Find minimum full-precision sensors
+    idx_full = find(Pe_full < target, 1, 'first');
+    ng = n_full(idx_full);
+    
+    % Find minimum binary sensors
+    idx_binary = find(Pe_binary < target, 1, 'first');
+    nb = n_binary(idx_binary);
+    
+    % Costs
+    cost_full = ng;
+    cost_binary = 0.5 * nb;
+    
+    % Determine cheaper system
+    if cost_binary < cost_full
+        cheaper = 'Binary';
+    elseif cost_full < cost_binary
+        cheaper = 'Full';
+    else
+        cheaper = 'Tie';
+    end
+    
+    fprintf('%.0e\t\t%d\t%.1f\t\t%d\t\t%.1f\t\t%s\n', ...
+        target, ng, cost_full, nb, cost_binary, cheaper);
+end
+
+fprintf('---------------------------------------------------------------\n');
+
+%% Plot cost required versus target probability
+
+full_costs = zeros(size(targets));
+binary_costs = zeros(size(targets));
+
+for j = 1:length(targets)
+    
+    target = targets(j);
+    
+    idx_full = find(Pe_full < target, 1, 'first');
+    idx_binary = find(Pe_binary < target, 1, 'first');
+    
+    full_costs(j) = n_full(idx_full);
+    binary_costs(j) = 0.5 * n_binary(idx_binary);
+    
+end
+
+figure;
+semilogx(targets, full_costs, 'o-', 'LineWidth', 2);
+hold on;
+grid on;
+
+semilogx(targets, binary_costs, 's-', 'LineWidth', 2);
+
+set(gca, 'XDir', 'reverse');
+
+xlabel('Target Probability of Error');
+ylabel('Total Cost');
+title('Cost Required to Achieve Different Error Probability Thresholds');
+
+legend('Full-Precision Sensors', ...
+       'Binary Sensors', ...
+       'Location', 'northwest');
+\end{lstlisting}
+
+\subsection{Results}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/p6_graph.png}
+    \caption{Cost Required to Achieve Different Error Probability Thresholds}
+    \label{fig:problem1}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/p6_results.png}
+    \caption{MATLAB command window output for Problem 6.}
+    \label{fig:problem1}
+\end{figure}
+
+The MATLAB analysis was performed for several target probabilities of error in order to compare the sensor requirements and total system costs of the full-precision and binary sensor architectures. The target probabilities considered were
 
 \[
-61 \text{ binary sensors}
+10^{-3},
+\quad
+10^{-4},
+\quad
+10^{-5},
+\quad
+10^{-6}.
 \]
 
-cost the same as
+For each target probability of error, MATLAB determined the minimum number of sensors required for both systems to satisfy the specified threshold. The corresponding system costs were then computed assuming that a full-precision sensor has a normalized cost of one unit and that a binary sensor costs one-half of a full-precision sensor.
 
-\[
-30.5 \text{ full-precision sensors}.
-\]
+The resulting values are summarized in Table~\ref{tab:problem6results}.
 
-This is less than the \(39\) full-precision sensors required to meet the same target. Therefore, at the \(10^{-3}\) threshold, binary sensors are more cost effective.
+\begin{table}[H]
+\centering
+\caption{Sensor requirements and system costs for various target probabilities of error.}
+\label{tab:problem6results}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Target \(P_e\) &
+\(n_g\) &
+\(C_{\text{full}}\) &
+\(n_b\) &
+\(C_{\text{binary}}\) \\
+\hline
+\(10^{-3}\) & 39 & 39.0 & 61 & 30.5 \\
+\hline
+\(10^{-4}\) & 56 & 56.0 & 87 & 43.5 \\
+\hline
+\(10^{-5}\) & 73 & 73.0 & 115 & 57.5 \\
+\hline
+\(10^{-6}\) & 91 & 91.0 & 143 & 71.5 \\
+\hline
+\end{tabular}
+\end{table}
 
-Based on the slopes of the curves, the full-precision system has a steeper decrease in probability of error. This means that as the required probability of error becomes much smaller, the full-precision system gains reliability more quickly per added sensor. Because of this steeper slope, it is possible that for sufficiently low target error probabilities, the full-precision system may eventually become more cost effective despite its higher per-sensor cost.
+The results show that increasingly stringent probability-of-error requirements require a larger number of sensors for both architectures. As the target probability of error decreases, the required number of full-precision sensors and binary sensors both increase.\\
 
-Thus, the binary sensor system is less expensive for achieving
+The MATLAB calculations also show that the binary sensor system requires more sensors than the full-precision sensor system for every probability-of-error threshold considered. This is consistent with the analytical results obtained in the previous problems, where the binary sensor discards information by reducing each observation to a single bit.\\
 
+A plot of total system cost versus target probability of error was also generated, as seen in Figure 8. This plot provides a visual comparison of how the required cost changes as increasingly smaller probabilities of error are desired.
+
+\subsection{Interpretation of Results}
+
+The MATLAB results show that the binary sensor system requires more sensors than the full-precision sensor system to achieve the same probability of error. This is expected because binary sensors retain only the sign of each observation, while full-precision sensors preserve the complete measurement and therefore provide more information.\\
+
+Despite requiring more sensors, the binary sensor system remains less expensive because each binary sensor costs only half as much as a full-precision sensor. For example, to achieve
 \[
 P(\hat{S}\neq S)<10^{-3},
 \]
+the full-precision system requires \(39\) sensors for a total cost of \(39\), while the binary system requires \(61\) sensors for a total cost of only \(30.5\).\\
 
-but the full-precision system may become more cost effective at much lower probabilities of error because its error probability decreases faster with increasing \(n\).
+This trend continues for the smaller error-probability thresholds considered in the MATLAB analysis in Figure 8. Although both systems require additional sensors as the target probability of error decreases, the total cost of the binary system remains below that of the full-precision system throughout the tested range.\\
 
+Based on these results, the binary sensor system is the more cost-effective design for all probability-of-error thresholds examined in this study.
 \[
-\boxed{\text{At }10^{-3},\text{ the binary sensor system is less expensive.}}
+\boxed{\text{The binary sensor system provides the lowest cost for all tested error thresholds.}}
 \]
 
 \clearpage

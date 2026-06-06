@@ -31,7 +31,9 @@
 \contentsline {section}{\numberline {7}Problem 6}{26}{section.7}%
 \contentsline {subsection}{\numberline {7.1}Preliminary Remarks}{26}{subsection.7.1}%
 \contentsline {subsection}{\numberline {7.2}Answer}{26}{subsection.7.2}%
-\contentsline {subsection}{\numberline {7.3}Discussion of Lower Error Probabilities}{27}{subsection.7.3}%
-\contentsline {section}{\numberline {8}Problem 7}{29}{section.8}%
-\contentsline {section}{\numberline {9}Problem 8}{30}{section.9}%
-\contentsline {section}{\numberline {10}Conclusion}{31}{section.10}%
+\contentsline {subsection}{\numberline {7.3}Matlab Code}{27}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Results}{30}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Interpretation of Results}{31}{subsection.7.5}%
+\contentsline {section}{\numberline {8}Problem 7}{32}{section.8}%
+\contentsline {section}{\numberline {9}Problem 8}{33}{section.9}%
+\contentsline {section}{\numberline {10}Conclusion}{34}{section.10}%
