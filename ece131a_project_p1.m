@@ -2,48 +2,58 @@ clc;
 clear;
 close all;
 
-% ECE 131A Extra Credit Project
-% Problem 1
+%% Problem 1
 % Distributed Detection in Gaussian Noise
+% P(error) = Q(m*sqrt(n))
 
-% Given signal amplitude
-m = 0.5;
+m = 0.5;              % Signal amplitude
+n = 1:100;            % Number of sensors
 
-% Number of sensors from 1 to 100
-n = 1:100;
+% Compute probability of error
+Pe = qfunc(m*sqrt(n));
 
-% Probability of error formula:
-% Pe = P(S_hat ~= S) = Q(m*sqrt(n))
-Pe = qfunc(m .* sqrt(n));
-
-% Plot probability of error using semilogy
-figure;
-semilogy(n, Pe, 'LineWidth', 2);
-grid on;
-hold on;
-
-% Plotting the threshold line Pe = 10^-3
+% Error threshold
 threshold = 1e-3;
-yline(threshold, '--', 'P_e = 10^{-3}', 'LineWidth', 1.5);
 
-% Find the smallest n such that Pe < 10^-3
+% Find smallest n satisfying Pe < 10^-3
 ng = find(Pe < threshold, 1, 'first');
 
-% Mark first valid point
-semilogy(ng, Pe(ng), 'o', 'MarkerSize', 8, 'LineWidth', 2);
+%% Create Figure
+figure;
 
-% Labeling the graph
-xlabel('Number of sensors n');
-ylabel('Probability of Error P(\hat{S} \neq S)');
-title('Probability of Error vs. Number of Sensors for m = 0.5');
+semilogy(n, Pe, 'LineWidth', 2);
+hold on;
+grid on;
 
-% Legend
-legend('P_e = Q(0.5\sqrt{n})', 'Threshold = 10^{-3}', ...
-       'First n below threshold', 'Location', 'southwest');
+% Threshold line
+yline(threshold,'--','10^{-3}','LineWidth',1.5);
 
-% Print results in Command Window
-fprintf('Problem 1 Results:\n');
-fprintf('m = %.2f\n', m);
-fprintf('Smallest number of sensors needed: n_g = %d\n', ng);
-fprintf('P_error at n_g = %d is %.6e\n', ng, Pe(ng));
-fprintf('P_error at n_g - 1 = %d is %.6e\n', ng-1, Pe(ng-1));
+% Mark ng
+semilogy(ng, Pe(ng), 'o', ...
+    'MarkerSize', 8, ...
+    'LineWidth', 2);
+
+xlabel('Number of Sensors, n');
+ylabel('Probability of Error');
+title('Probability of Error vs. Number of Sensors (m = 0.5)');
+
+legend('P_e = Q(0.5\sqrt{n})', ...
+       'Threshold', ...
+       sprintf('n_g = %d',ng), ...
+       'Location','southwest');
+
+%% Display Results
+fprintf('\n');
+fprintf('-----------------------------------\n');
+fprintf('Problem 1 Results\n');
+fprintf('-----------------------------------\n');
+fprintf('Signal amplitude m = %.1f\n',m);
+fprintf('Required error probability < 10^-3\n');
+fprintf('Minimum number of sensors n_g = %d\n',ng);
+fprintf('Probability of error at n_g = %.6e\n',Pe(ng));
+
+if ng > 1
+    fprintf('Probability of error at n = %d is %.6e\n', ...
+        ng-1, Pe(ng-1));
+end
+fprintf('-----------------------------------\n');
