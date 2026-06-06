@@ -42,6 +42,5 @@
 \contentsline {section}{\numberline {9}Problem 8}{36}{section.9}%
 \contentsline {subsection}{\numberline {9.1}Preliminary Remarks}{36}{subsection.9.1}%
 \contentsline {subsection}{\numberline {9.2}Matlab Code}{36}{subsection.9.2}%
-\contentsline {subsection}{\numberline {9.3}Results}{36}{subsection.9.3}%
-\contentsline {subsection}{\numberline {9.4}Interpretation of Results}{36}{subsection.9.4}%
-\contentsline {section}{\numberline {10}Conclusion}{37}{section.10}%
+\contentsline {subsection}{\numberline {9.3}Results}{39}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Interpretation of Results}{40}{subsection.9.4}%

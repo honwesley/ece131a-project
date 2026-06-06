@@ -1836,19 +1836,182 @@ To improve performance, the additional sensor must provide information that is d
 The goal of this problem is to optimize the threshold \(\gamma\) so that a \(62\)-sensor system helps achieves the lowest possible probability of error.
 
 \subsection{Matlab Code}
+\begin{lstlisting}[language=Matlab, caption={Matlab Code: Problem 8}]
+clc;
+clear;
+close all;
+
+%% Problem 8
+% Optimize modified threshold for the 62-sensor binary system
+
+m = 0.5;
+nb = 61;                    % 61 standard sensors
+p = normcdf(m);             % P(B = 1 | S = 0.5)
+q = 1 - p;
+
+%% Reference probabilities
+
+Pe_61 = binocdf(30, 61, p);     % Standard 61 sensors
+Pe_63 = binocdf(31, 63, p);     % Standard 63 sensors
+
+%% Search over gamma
+
+gamma_values = -3:0.001:3;
+Pe_modified = zeros(size(gamma_values));
+
+for k = 1:length(gamma_values)
+
+    gamma = gamma_values(k);
+
+    % Modified sensor probabilities
+    a = 1 - normcdf(gamma - m);   % P(B_mod = 1 | S = 0.5)
+    b = 1 - normcdf(gamma + m);   % P(B_mod = 1 | S = -0.5)
+
+    Pe = 0;
+
+    for u = 0:nb
+
+        % Probability of u ones from standard sensors
+        P_u_pos = binopdf(u, nb, p);
+        P_u_neg = binopdf(u, nb, q);
+
+        % Modified sensor output c = 0
+        P_pos_0 = P_u_pos * (1 - a);
+        P_neg_0 = P_u_neg * (1 - b);
+
+        % Modified sensor output c = 1
+        P_pos_1 = P_u_pos * a;
+        P_neg_1 = P_u_neg * b;
+
+        % ML/Bayes error contribution with equal priors
+        Pe = Pe + 0.5 * min(P_pos_0, P_neg_0);
+        Pe = Pe + 0.5 * min(P_pos_1, P_neg_1);
+
+    end
+
+    Pe_modified(k) = Pe;
+
+end
+
+%% Find optimum
+
+[Pe_opt, idx] = min(Pe_modified);
+gamma_opt = gamma_values(idx);
+
+%% Display results
+
+fprintf('\n');
+fprintf('-----------------------------------\n');
+fprintf('Problem 8 Results\n');
+fprintf('-----------------------------------\n');
+fprintf('Standard Pe for 61 sensors = %.12e\n', Pe_61);
+fprintf('Optimal modified threshold gamma = %.6f\n', gamma_opt);
+fprintf('Modified Pe for 62 sensors = %.12e\n', Pe_opt);
+fprintf('Standard Pe for 63 sensors = %.12e\n', Pe_63);
+fprintf('-----------------------------------\n');
+
+%% Plot
+
+figure;
+plot(gamma_values, Pe_modified, 'LineWidth', 2);
+hold on;
+grid on;
+
+plot(gamma_opt, Pe_opt, 'o', 'MarkerSize', 8, 'LineWidth', 2);
+yline(Pe_61, '--', 'Standard 61 Sensors', 'LineWidth', 1.5);
+yline(Pe_63, '--', 'Standard 63 Sensors', 'LineWidth', 1.5);
+
+xlabel('Modified Sensor Threshold, gamma');
+ylabel('Probability of Error');
+title('Problem 8: Modified 62-Sensor Error Probability');
+
+legend('Modified 62-Sensor System', ...
+       sprintf('Optimal gamma = %.3f', gamma_opt), ...
+       'Standard 61 Sensors', ...
+       'Standard 63 Sensors', ...
+       'Location', 'best');
+\end{lstlisting}
 
 \subsection{Results}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/p8_graph.png}
+    \caption{Modified 62-sensor error Probability}
+    \label{fig:problem1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/p8_results.png}
+    \caption{MATLAB command prompt output Problem 8.}
+    \label{fig:problem1}
+\end{figure}
+
+
+The MATLAB code evaluates the performance of a modified \(62\)-sensor binary system to compare with that of a 61-binary system and a 63-binary system. The system uses \(61\) standard binary sensors with threshold \(0\), and one additional sensor with an adjustable threshold \(\gamma\). The purpose of the code is to search over possible values of \(\gamma\) and find the threshold that minimizes the total probability of error.\\
+
+For each value of \(\gamma\), MATLAB computes the probability of error using the likelihoods under both hypotheses, \(S=0.5\) and \(S=-0.5\). The code then selects the value of \(\gamma\) that gives the smallest probability of error. It also compares this optimized \(62\)-sensor system to the standard \(61\)-sensor and \(63\)-sensor binary systems.\\
+
+The MATLAB output shows that the standard \(61\)-sensor binary system has probability of error
+\[
+P_e(61)=8.951301218723\times10^{-4}.
+\]
+After optimizing the threshold of the additional sensor, MATLAB found
+\[
+\gamma_{\text{opt}}=-0.807.
+\]
+Using this modified threshold, the probability of error for the \(62\)-sensor system becomes
+\[
+P_e^{\text{modified}}(62)=8.509425034260\times10^{-4}.
+\]
+For comparison, the standard \(63\)-sensor binary system has probability of error
+\[
+P_e(63)=7.534491112450\times10^{-4}.
+\]
+These results show that the modified \(62\)-sensor system improves on the standard \(61\)-sensor system, since
+\[
+8.509425034260\times10^{-4}
+<
+8.951301218723\times10^{-4}.
+\]
+However, it does not outperform the standard \(63\)-sensor system, since
+\[
+8.509425034260\times10^{-4}
+>
+7.534491112450\times10^{-4}.
+\]
+The plot of probability of error versus \(\gamma\) shows how the performance changes as the modified sensor threshold is varied. The minimum point occurs near
+\[
+\boxed{\gamma=-0.807}
+\]
+which agrees with the value that MATLAB printed with the code. The horizontal reference lines show the standard \(61\)-sensor and \(63\)-sensor probabilities of error, allowing the optimized \(62\)-sensor result to be compared directly against both standard systems.
 
 \subsection{Interpretation of Results}
 
+The results demonstrate that modifying the threshold of the additional sensor successfully improves the performance of the even-sensor system. In Problem 7, it was shown that a standard \(62\)-sensor binary system would have the same probability of error as a standard \(61\)-sensor system. So, simply adding one more identical sensor provides no benefit.\\
 
-\clearpage
+By assigning the additional sensor a different threshold, the symmetry responsible for this result is broken. With MATLAB, I determined that the optimal threshold is
+\[
+\gamma_{\text{optimal}}=-0.807,
+\]
+which reduces the probability of error from
+\[
+P_e(61)=8.951301\times10^{-4}
+\]
+to
+\[
+P_e^{\text{modified}}(62)=8.509425\times10^{-4}.
+\]
+This confirms that the modified sensor provides useful information and allows the \(62\)-sensor system to outperform the standard \(61\)-sensor system.\\
 
+The probability-of-error curve also shows that detector performance depends strongly on the choice of threshold. As \(\gamma\) moves away from its optimal value, the probability of error increases. The minimum point on the curve corresponds to the threshold selected by MATLAB and represents the best achievable performance for the modified \(62\)-sensor architecture.\\
 
+Although the modification improves performance, the resulting probability of error remains larger than that of the standard \(63\)-sensor system:
+\[
+P_e(63)=7.534491\times10^{-4}.
+\]
+Thus, the statement in the problem that the optimized \(62\)-sensor system cannot outperform the standard system using two additional sensors is validated. The modification provides some improvement, but it cannot completely compensate for the information gained by adding another independent sensor.\\
 
-%-------------------------------------------------
-
-\section{Conclusion}
-
+Overall, the results show that introducing a nonstandard threshold is an effective way to improve the even-sensor case. The optimized \(62\)-sensor system performs better than the standard \(61\)-sensor system while remaining inferior to the standard \(63\)-sensor system, which is exactly the behavior predicted by the theoretical.
 
 \end{document}

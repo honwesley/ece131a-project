@@ -763,6 +763,16 @@ INPUT ./images/p7_results.png
 INPUT images/p7_results.png
 INPUT ./images/p7_results.png
 INPUT ./images/p7_results.png
+INPUT ./images/p8_graph.png
+INPUT ./images/p8_graph.png
+INPUT images/p8_graph.png
+INPUT ./images/p8_graph.png
+INPUT ./images/p8_graph.png
+INPUT ./images/p8_results.png
+INPUT ./images/p8_results.png
+INPUT images/p8_results.png
+INPUT ./images/p8_results.png
+INPUT ./images/p8_results.png
 INPUT ec_project131a.aux
 INPUT ./ec_project131a.out
 INPUT ./ec_project131a.out
