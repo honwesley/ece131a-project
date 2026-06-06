@@ -1099,7 +1099,6 @@ fprintf('-----------------------------------\n');
     \label{fig:problem1}
 \end{figure}
 
-
 \subsection{Interpretation of Results}
 
 The MATLAB results show that the probability of error decreases as the number of sensors increases for both the full-precision and binary sensor systems. This behavior is expected because each additional sensor provides another independent observation of the transmitted signal, allowing the detector to make a more reliable decision. As the number of sensors grows, the effects of the Gaussian noise tend to average out, reducing the likelihood of an incorrect estimate.\\
@@ -1161,6 +1160,189 @@ These results demonstrate the tradeoff between sensor complexity and detection p
 \noindent Simulate this binary sensor system with $n_b$ sensors as follows: For each simulation run, generate $n_b$ observations $X_i$ as before and then compute the associated $B_i$ values and use them to compute the sufficient statistic $U_{n_b}$. Then use $U_{n_b}$ to compute $\hat{S}$ and note whether the estimate is correct or is an error. Perform simulation runs until you observe 200 errors. Keep track of the total number $K$ of simulation runs. Report your estimated error rate as $\frac{200}{K}$. If everything is working well, your simulation point should match the probability of error you calculated in the previous part for $n_b$ observations, i.e. a number close to $10^{-3}$.\\
 
 \hrule
+
+\subsection{Preliminary Remarks}
+
+In Problem 4, the probability of error for the binary sensor system was computed analytically using the binomial distribution. The minimum odd number of binary sensors required to achieve
+
+\[
+P(\hat{S}\neq S)<10^{-3}
+\]
+
+was found to be
+
+\[
+n_b=61.
+\]
+
+In problem 5, I verified this theoretical result through simulation. Rather than computing the probability of error directly from the binomial distribution, the sensor system is simulated by generating random observations and applying the majority-vote decision rule developed in Problem 3.\\
+
+For each simulation run, \(n_b=61\) independent sensor observations are generated. These observations are converted into binary sensor outputs, and the sufficient statistic
+
+\[
+U_{n_b}
+=
+\sum_{i=1}^{n_b} B_i
+\]
+
+is computed. The majority-vote detector then uses \(U_{n_b}\) to estimate the transmitted signal. The simulation continues until \(200\) detection errors have been observed. If \(K\) denotes the total number of simulation runs required to observe these \(200\) errors, the simulated probability of error is estimated by
+
+\[
+\hat{P}_e=\frac{200}{K}.
+\]
+
+The goal of this problem is to confirm that the simulated probability of error agrees with the theoretical probability that was obtained in Problem 4.
+
+\subsection{Answer}
+
+The binary sensor system was simulated using the minimum number of sensors determined in Problem 4,
+\[
+n_b=61.
+\]
+The transmitted signal was fixed at
+\[
+S=0.5.
+\]
+For each simulation run, \(61\) independent Gaussian noise samples were generated according to
+\[
+Z_i\sim N(0,1).
+\]
+The corresponding sensor observations were then computed using
+\[
+X_i=S+Z_i.
+\]
+Each observation was converted into a binary sensor output according to
+\[
+B_i=
+\begin{cases}
+1, & X_i\geq 0,\\
+0, & X_i<0.
+\end{cases}
+\]
+After generating all \(61\) binary observations, the sufficient statistic
+\[
+U_{61}
+=
+\sum_{i=1}^{61}B_i
+\]
+was computed.\\
+
+The detector then applied the majority-vote decision rule developed in Problem 3. Since \(61\) is odd, a majority exists whenever at least \(31\) sensors report a value of \(1\). Therefore,
+
+\[
+\hat{S}=
+\begin{cases}
+0.5, & U_{61}\geq 31,\\
+-0.5, & U_{61}\leq 30.
+\end{cases}
+\]
+Because the true transmitted signal is \(S=0.5\), an error occurs whenever the detector decides
+\[
+\hat{S}=-0.5.
+\]
+The simulation is repeated until \(200\) errors have been observed. If \(K\) denotes the total number of simulation runs required to accumulate these errors, the probability of error is estimated by
+\[
+\hat{P}_e=\frac{200}{K}.
+\]
+From Problem 4, the theoretical probability of error for a binary sensor system with \(61\) sensors is
+\[
+P_e(61)
+=
+8.951301\times10^{-4}.
+\]
+Consequently, the expected number of simulation runs required to observe \(200\) errors is approximately
+\[
+K
+\approx
+\frac{200}{8.951301\times10^{-4}}
+\]
+\[
+K
+\approx
+223{,}431.
+\]
+Therefore, the simulation is expected to require roughly \(220{,}000\) to \(230{,}000\) runs before reaching the target of \(200\) observed errors. The estimated probability of error should be close to the theoretical value obtained in Problem 4.
+
+\subsection{Matlab Code}
+
+\begin{lstlisting}[language=Matlab, caption={Matlab Code: Problem 5}]
+clc;
+clear;
+close all;
+
+%% Problem 5
+% Simulation of the binary sensor system
+
+m = 0.5;
+S = 0.5;
+
+% Number of binary sensors from Problem 4
+nb = 61;
+
+% Stop after observing 200 errors
+target_errors = 200;
+
+% Initialize counters
+num_errors = 0;
+K = 0;
+
+%% Simulation Loop
+
+while num_errors < target_errors
+    
+    % Count this simulation run
+    K = K + 1;
+    
+    % Generate Gaussian noise samples
+    Z = normrnd(0, 1, [1, nb]);
+    
+    % Generate observations
+    X = S + Z;
+    
+    % Convert observations to binary sensor outputs
+    B = X >= 0;
+    
+    % Compute sufficient statistic
+    U = sum(B);
+    
+    % Majority-vote decision rule
+    if U >= 31
+        S_hat = 0.5;
+    else
+        S_hat = -0.5;
+    end
+    
+    % Check whether an error occurred
+    if S_hat ~= S
+        num_errors = num_errors + 1;
+    end
+end
+
+%% Compute results
+
+Pe_sim = target_errors / K;
+
+% Theoretical probability from Problem 4
+p = normcdf(0.5);
+Pe_theory = binocdf(30, nb, p);
+
+%% Display results
+
+fprintf('\n');
+fprintf('-----------------------------------\n');
+fprintf('Problem 5 Simulation Results\n');
+fprintf('-----------------------------------\n');
+fprintf('Number of binary sensors n_b = %d\n', nb);
+fprintf('Target number of errors = %d\n', target_errors);
+fprintf('Total number of simulation runs K = %d\n', K);
+fprintf('Estimated error probability = 200/K = %.6e\n', Pe_sim);
+fprintf('Theoretical error probability = %.6e\n', Pe_theory);
+fprintf('-----------------------------------\n');
+\end{lstlisting}
+
+\subsection{Results}
+
+\subsection{Interpretation of Results}
 
 \clearpage
 
