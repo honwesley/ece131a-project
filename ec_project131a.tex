@@ -1085,9 +1085,69 @@ fprintf('-----------------------------------\n');
 
 \subsection{Results (from Matlab)}
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/p4_graph.png}
+    \caption{Probability of error as a function of the number of sensors for $m=0.5$.}
+    \label{fig:problem1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/p4_results.png}
+    \caption{Probability of error as a function of the number of sensors for $m=0.5$.}
+    \label{fig:problem1}
+\end{figure}
+
 
 \subsection{Interpretation of Results}
 
+The MATLAB results show that the probability of error decreases as the number of sensors increases for both the full-precision and binary sensor systems. This behavior is expected because each additional sensor provides another independent observation of the transmitted signal, allowing the detector to make a more reliable decision. As the number of sensors grows, the effects of the Gaussian noise tend to average out, reducing the likelihood of an incorrect estimate.\\
+
+Comparing the two probability-of-error curves in Figure 5, we see that the full-precision system consistently outperforms the binary sensor system. For a given number of sensors, the full-precision detector achieves a lower probability of error because it utilizes the complete observation \(X_i\), whereas the binary detector retains only the sign of the observation. Consequently, information is lost when the observations are quantized into binary values, resulting in reduced performance.\\
+
+The MATLAB calculations indicate that the minimum odd number of binary sensors required to satisfy
+\[
+P(\hat{S}\neq S)<10^{-3}
+\]
+is
+\[
+\boxed{n_b=61}
+\]
+At this value,
+\[
+P_e(61)=8.951301\times10^{-4},
+\]
+
+which is below the required threshold. In contrast, the previous odd value,
+
+\[
+n=59,
+\]
+
+produces
+
+\[
+P_e(59)=1.063877\times10^{-3},
+\]
+
+which is slightly above the threshold. Therefore, \(61\) is the smallest odd number of binary sensors capable of achieving the desired probability of error.\\
+
+Comparing this result with Problem 1 shows that the full-precision sensor system requires only
+
+\[
+n_g=39
+\]
+
+sensors to achieve the same reliability. The binary sensor system therefore requires
+
+\[
+61-39=22
+\]
+
+additional sensors to compensate for the information lost during quantization.\\
+
+These results demonstrate the tradeoff between sensor complexity and detection performance. Full-precision sensors are more efficient because they preserve the complete measurement information, while binary sensors sacrifice performance in exchange for simpler sensing and data processing. As a result, the larger number of binary sensors is required to achieve the same probability of error as the full-precision sensor system. 
 
 \clearpage
 
