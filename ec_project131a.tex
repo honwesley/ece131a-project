@@ -286,25 +286,10 @@ This expression above is the theoretical probability of error for any number of 
 
 \subsection{MATLAB}
 
-The probability of error was evaluated for \(n=1\) to \(100\) using MATLAB's \texttt{qfunc} function. A semilogarithmic plot was generated using \texttt{semilogy} to clearly display the exponential decrease in error probability as the number of sensors increases.
+\hrule
 
-The MATLAB results show that the probability of error decreases rapidly as additional sensors are added. This occurs because averaging more independent observations reduces the variance of the sample mean, making it easier to distinguish between the two possible signal values.
-
-The smallest number of sensors satisfying
-
-\[
-P(\hat{S}\neq S)<10^{-3}
-\]
-
-was found to be
-
-\[
-n_g=39.
-\]
-
-Therefore, at least \(39\) sensors are required to achieve a probability of error below \(10^{-3}\).
-
-\begin{lstlisting}[language=Matlab, caption={Matlab Code for Problem 1}]
+% matlab code block
+\begin{lstlisting}[language=Matlab, caption={Matlab Code: Problem 1}]
 clc;
 clear;
 close all;
@@ -316,10 +301,10 @@ close all;
 m = 0.5;              % Signal amplitude
 n = 1:100;            % Number of sensors
 
-% Compute probability of error
+% Compute probability of error, using qfunc
 Pe = qfunc(m*sqrt(n));
 
-% Error threshold
+% Error threshold (10^-3)
 threshold = 1e-3;
 
 % Find smallest n satisfying Pe < 10^-3
@@ -328,7 +313,7 @@ ng = find(Pe < threshold, 1, 'first');
 %% Create Figure
 figure;
 
-semilogy(n, Pe, 'LineWidth', 2);
+semilogy(n, Pe, 'LineWidth', 2); % using semilogy
 hold on;
 grid on;
 
@@ -349,7 +334,7 @@ legend('P_e = Q(0.5\sqrt{n})', ...
        sprintf('n_g = %d',ng), ...
        'Location','southwest');
 
-%% Display Results
+%% Displaying Results (print)
 fprintf('\n');
 fprintf('-----------------------------------\n');
 fprintf('Problem 1 Results\n');
@@ -365,6 +350,56 @@ if ng > 1
 end
 fprintf('-----------------------------------\n');
 \end{lstlisting}
+
+%adding the figures (graph and output)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/p1_graph.png}
+    \caption{Probability of error as a function of the number of sensors for $m=0.5$.}
+    \label{fig:problem1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/p1_results.png}
+    \caption{MATLAB command window output for Problem 1.}
+\end{figure}
+
+\clearpage
+
+The theoretical probability of error derived in the previous section is
+
+\[
+P(\hat{S}\neq S)=Q(0.5\sqrt{n}).
+\]
+
+This expression was evaluated in MATLAB for values of \(n\) (the number of sensors) ranging from \(1\) to \(100\). The built-in \texttt{qfunc} function was used to compute the Gaussian Q-function, and the results were plotted using the \texttt{semilogy} command. A logarithmic scale was used for the vertical axis because the probability of error decreases rapidly as the number of sensors increases.\\
+
+Figure 1 shows the probability of error as a function of the number of sensors. The graph shows that the probability of error decreases steadily as \(n\) increases in the logarithmic scale. This makes sense because averaging more independent sensor measurements reduces the variance of the sample mean, making it easier to distinguish between the two possible transmitted signal values, thereby ensuring our confidence in an accurate signal.\\
+
+A horizontal reference line at \(10^{-3}\) was added to the plot to show the required error threshold. From the graph, the error probability crosses this threshold between \(n=38\) and \(n=39\). MATLAB was then used to find the smallest value of \(n\) satisfying
+
+\[
+P(\hat{S}\neq S)<10^{-3}.
+\]
+
+The numerical results show that
+
+\[
+P_e(38)=1.027359\times 10^{-3}
+\]
+
+and
+
+\[
+P_e(39)=8.966136\times 10^{-4}.
+\]
+
+Therefore, \(n=38\) is not enough, since its error probability is still above \(10^{-3}\). However, \(n=39\) is sufficient because its error probability is below \(10^{-3}\). Thus, the minimum number of sensors required is
+
+\[
+\boxed{\displaystyle n_g = 39}
+\]
 
 \clearpage 
 

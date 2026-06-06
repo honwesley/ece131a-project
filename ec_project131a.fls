@@ -713,6 +713,16 @@ INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/ectt1200.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/ectt1095.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/ecrm1095.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/ecit1095.tfm
+INPUT ./images/p1_graph.png
+INPUT ./images/p1_graph.png
+INPUT images/p1_graph.png
+INPUT ./images/p1_graph.png
+INPUT ./images/p1_graph.png
+INPUT ./images/p1_results.png
+INPUT ./images/p1_results.png
+INPUT images/p1_results.png
+INPUT ./images/p1_results.png
+INPUT ./images/p1_results.png
 INPUT ec_project131a.aux
 INPUT ./ec_project131a.out
 INPUT ./ec_project131a.out

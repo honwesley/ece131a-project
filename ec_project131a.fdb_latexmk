@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1780704820 "/Users/wesleyhon/Documents/131a/ec_project131a.tex" "ec_project131a.pdf" "ec_project131a" 1780704821
-  "/Users/wesleyhon/Documents/131a/ec_project131a.tex" 1780704820 14841 5c1cc7fdc3c9ed4b4c730af972e25035 ""
+["pdflatex"] 1780706361 "/Users/wesleyhon/Documents/131a/ec_project131a.tex" "ec_project131a.pdf" "ec_project131a" 1780706361
+  "/Users/wesleyhon/Documents/131a/ec_project131a.tex" 1780706361 16238 8b8fe97ef7a40267c3ba969a54d9ea83 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm" 1136768653 3584 402da0b29eafbad07963b1224b222f18 ""
@@ -126,10 +126,12 @@
   "/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1647878959 4410336 7d30a02e9fa9a16d7d1f8d037ba69641 ""
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1663128935 2826441 79408cedd297a2f161bb716ced87a352 ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
-  "ec_project131a.aux" 1780704820 2522 9357a9f287adea0687aca43a491923b0 "pdflatex"
-  "ec_project131a.out" 1780704820 1667 9c4278a23c82acc410cb487c2ca9f55f "pdflatex"
-  "ec_project131a.tex" 1780704820 14841 5c1cc7fdc3c9ed4b4c730af972e25035 ""
-  "ec_project131a.toc" 1780704820 1076 f6537ada34599cef15426e053bf6b666 "pdflatex"
+  "ec_project131a.aux" 1780706361 3084 36ddeca5d325df4c925b8090c850b815 "pdflatex"
+  "ec_project131a.out" 1780706361 1667 9c4278a23c82acc410cb487c2ca9f55f "pdflatex"
+  "ec_project131a.tex" 1780706361 16238 8b8fe97ef7a40267c3ba969a54d9ea83 ""
+  "ec_project131a.toc" 1780706361 1077 fc8b5fe79631c3e41caac694fef7bd56 "pdflatex"
+  "images/p1_graph.png" 1780705408 45674 c8efdc569493b2a50bdef8ef68d2880d ""
+  "images/p1_results.png" 1780705408 7298 d4ed136e48a11184dae22bb229927491 ""
   (generated)
   "ec_project131a.aux"
   "ec_project131a.log"

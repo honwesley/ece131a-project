@@ -9,10 +9,10 @@ close all;
 m = 0.5;              % Signal amplitude
 n = 1:100;            % Number of sensors
 
-% Compute probability of error
+% Compute probability of error, using qfunc
 Pe = qfunc(m*sqrt(n));
 
-% Error threshold
+% Error threshold (10^-3)
 threshold = 1e-3;
 
 % Find smallest n satisfying Pe < 10^-3
@@ -21,7 +21,7 @@ ng = find(Pe < threshold, 1, 'first');
 %% Create Figure
 figure;
 
-semilogy(n, Pe, 'LineWidth', 2);
+semilogy(n, Pe, 'LineWidth', 2); % using semilogy
 hold on;
 grid on;
 
@@ -42,7 +42,7 @@ legend('P_e = Q(0.5\sqrt{n})', ...
        sprintf('n_g = %d',ng), ...
        'Location','southwest');
 
-%% Display Results
+%% Displaying Results (print)
 fprintf('\n');
 fprintf('-----------------------------------\n');
 fprintf('Problem 1 Results\n');
