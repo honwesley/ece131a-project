@@ -29,6 +29,9 @@
 \contentsline {subsection}{\numberline {6.4}Results}{24}{subsection.6.4}%
 \contentsline {subsection}{\numberline {6.5}Interpretation of Results}{24}{subsection.6.5}%
 \contentsline {section}{\numberline {7}Problem 6}{26}{section.7}%
-\contentsline {section}{\numberline {8}Problem 7}{27}{section.8}%
-\contentsline {section}{\numberline {9}Problem 8}{28}{section.9}%
-\contentsline {section}{\numberline {10}Conclusion}{29}{section.10}%
+\contentsline {subsection}{\numberline {7.1}Preliminary Remarks}{26}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Answer}{26}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Discussion of Lower Error Probabilities}{27}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Problem 7}{29}{section.8}%
+\contentsline {section}{\numberline {9}Problem 8}{30}{section.9}%
+\contentsline {section}{\numberline {10}Conclusion}{31}{section.10}%

@@ -1395,6 +1395,132 @@ Furthermore, the results demonstrate that the majority-vote detector that I deri
 
 \hrule
 
+\subsection{Preliminary Remarks}
+
+I want to compare the cost efficiency of the full-precision sensor system and the binary sensor system. In Problems 1 and 2, the full-precision sensor system was analyzed. Each full-precision sensor measures the real-valued observation
+\[
+X_i=S+Z_i.
+\]
+In Problems 3 through 5, I analyzed the binary sensor system. Each binary sensor only records whether the observation is nonnegative:
+\[
+B_i=
+\begin{cases}
+1, & X_i\geq 0,\\
+0, & X_i<0.
+\end{cases}
+\]
+Although binary sensors lose information by reducing each observation to a single bit, each binary sensor costs only half as much as a full-precision sensor. Therefore, we must consider not which system uses fewer sensors, but which achieves the desired probability of an error at a lower total cost.
+
+\subsection{Answer}
+
+From Problem 1, the full-precision sensor system requires
+
+\[
+n_g=39
+\]
+
+sensors to achieve
+
+\[
+P(\hat{S}\neq S)<10^{-3}.
+\]
+
+Let the cost of one full-precision sensor be normalized to \(1\). Then the total cost of the full-precision sensor system is
+
+\[
+C_{\text{full}}=39(1).
+\]
+
+Thus,
+
+\[
+C_{\text{full}}=39.
+\]
+
+From Problem 4, the binary sensor system requires
+
+\[
+n_b=61
+\]
+
+sensors to achieve the same probability of error threshold. Since each binary sensor costs half as much as a full-precision sensor, the cost of each binary sensor is
+
+\[
+\frac{1}{2}.
+\]
+
+Therefore, the total cost of the binary sensor system is
+
+\[
+C_{\text{binary}}=61\left(\frac{1}{2}\right).
+\]
+
+So,
+
+\[
+C_{\text{binary}}=30.5.
+\]
+
+Comparing the two costs gives
+
+\[
+C_{\text{binary}}=30.5
+\]
+
+and
+
+\[
+C_{\text{full}}=39.
+\]
+
+Since
+
+\[
+30.5<39,
+\]
+
+the binary sensor system costs less to achieve a probability of error below \(10^{-3}\).
+
+\[
+\boxed{C_{\text{binary}}<C_{\text{full}}}
+\]
+
+Therefore, even though the binary sensor system requires more sensors, it is still less expensive overall because each binary sensor costs only half as much as a full-precision sensor.
+
+\subsection{Discussion of Lower Error Probabilities}
+
+The second part of the problem asks whether the same system would remain the most cost effective for lower probabilities of error. This requires comparing the slopes of the probability-of-error curves.
+
+The full-precision sensor curve decreases more rapidly than the binary sensor curve as the number of sensors increases. This is expected because full-precision sensors preserve the entire real-valued observation \(X_i\), while binary sensors only preserve the sign of the observation. Therefore, each full-precision sensor provides more information than each binary sensor.
+
+However, cost effectiveness depends on error probability as a function of cost, not just error probability as a function of sensor count. Since each binary sensor costs half as much, the binary system can use approximately twice as many sensors for the same total cost. At the \(10^{-3}\) threshold, this makes the binary system cheaper:
+
+\[
+61 \text{ binary sensors}
+\]
+
+cost the same as
+
+\[
+30.5 \text{ full-precision sensors}.
+\]
+
+This is less than the \(39\) full-precision sensors required to meet the same target. Therefore, at the \(10^{-3}\) threshold, binary sensors are more cost effective.
+
+Based on the slopes of the curves, the full-precision system has a steeper decrease in probability of error. This means that as the required probability of error becomes much smaller, the full-precision system gains reliability more quickly per added sensor. Because of this steeper slope, it is possible that for sufficiently low target error probabilities, the full-precision system may eventually become more cost effective despite its higher per-sensor cost.
+
+Thus, the binary sensor system is less expensive for achieving
+
+\[
+P(\hat{S}\neq S)<10^{-3},
+\]
+
+but the full-precision system may become more cost effective at much lower probabilities of error because its error probability decreases faster with increasing \(n\).
+
+\[
+\boxed{\text{At }10^{-3},\text{ the binary sensor system is less expensive.}}
+\]
+
 \clearpage
 
 \section{Problem 7}
